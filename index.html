@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ammo Chart</title>
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #000000;
+		
+        }
+		.contentbody {
+			width: 70%;
+			margin: 0 auto;
+		}
+		
+		
+		.top-container {
+		display: flex;
+		
+		}		
+		.area1 {
+		width: 850px;
+		height: 160px;
+		/*background-color: red;*/
+		margin: 0px;
+		}
+		.area1right {
+		height: 160px;
+		/*flex: 1;*/ /*width: 100%;*/
+		width: 50px;
+		}		
+        .filter-options {
+            margin-bottom: 0px;
+            display: flex;
+            align-items: center; /* Align items vertically */
+        }
+        .filter-options div {
+			margin: auto;
+			
+            /*margin-right: 6px;*/
+            align-items: center; /* Align items vertically */
+        }
+        .filter-options img {
+            vertical-align: middle;
+            padding: 0px;
+        }
+		.filter-options-button-area {
+		}
+		
+        .filter-options button {
+            margin: 0px -1px;
+            padding: 5px 29px;
+            background-color: #222;
+            border: none;
+            color: #B5B5B5;
+            cursor: pointer;
+            align: center;
+        }
+        .filter-options button:hover {
+            background-color: #207D03;
+	
+        }
+		.vendername {
+			text-align: center;
+			vertical-align: bottom;
+			padding: 0px 0px;
+			color: #B5B5B5;
+			font-size: 22px;
+			font-weight: bold;
+			width:200px;
+			background: #222;
+		}
+		
+		.venderarea {
+		width: 850px;
+		margin: auto;
+		
+		}
+		.venderimages {
+		height: 100px;
+		width: 100px;
+		float: left;
+		/*border-radius: 20%;*/
+		-webkit-clip-path: polygon(10% 0%, 0% 0%, 100% 0%, 100% 75%, 75% 100%, 0% 100%, 0% 100%, 0% 10%);
+		/*clip-path: polygon(20% 0%, 5% 0%, 100% 0%, 100% 60%, 60% 100%, 0% 95%, 0% 100%, 0% 20%);*/
+
+		}
+		.searcharea {
+		margin: auto;
+		padding: 5px;
+		margin-top: 7px;
+		}
+		
+		#searchBox {
+		width: 48.3%;
+		height: 35px;
+		margin-right: 12px;
+		margin-left: 0px;
+		}
+        #clearFilters {
+            width: 48.3%;
+			height: 40px;
+            text-align: center;
+            background-color: #cc4444;
+        }
+        #clearFilters:hover {
+            background-color: #dd6666;
+        }
+        .content {
+            margin: 0 auto;
+			min-width: 850px;
+        }
+		
+		.stattable td{
+		width: 25%;
+		padding: 10px;
+		font-size: 18px;
+		font-weight: bold;
+		text-align: center;
+		color: #B5B5B5;
+		vertical-align: top; /* Align items top */
+		}
+
+		.stattable table{
+		table-layout: fixed;
+		width: 100%;
+		min-width: 500px;
+		margin: 0 auto;
+		border: 0px solid #555;
+		color: #B5B5B5;
+		}
+		
+        .ammo-section {
+			/*min-width: 850px;*/
+            background-color: #444;
+            margin-bottom: 20px;
+            border-radius: 10px 10px 0px 0px;
+            /*margin: 0 auto;*/
+        }
+        .ammo-section h3 {
+            cursor: pointer;
+			/*min-width: 1350px;*/
+			box-sizing:border-box;
+			-moz-box-sizing:border-box; /* Firefox */
+			-webkit-box-sizing:border-box; /* Safari */
+            background-color: #B5B5B5;
+            padding: 10px;
+            border-radius: 10px 10px 0px 0px;
+            margin-bottom: 0; /* Remove bottom margin */
+        }
+        .ammo-section table {
+			/*min-width: 1350px;*/
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ddd; /* Light gray background */
+            /*border-radius: 0 0 5px 5px;*/
+            margin: 0 auto;
+        }
+        .ammo-section th, .ammo-section td {
+		
+            border: 1px solid #555;
+            padding: 8px;
+            text-align: center;
+        }
+        .ammo-section th {
+            background-color: #333;
+        }
+        .hidden {
+            display: none;
+        }
+        .ammo-content th {
+            background-color: #fff;
+        }
+		.pencolor {
+		color: #000000 !important;
+		}
+		
+		
+		.footer-area {
+		text-align: center;
+		color: #C5BABA;
+		}
+		
+		.footer-copyright {
+		text-align: center;
+		color: #A5A5A5;
+		}
+		.dispersionColor {
+		color: #000000;
+		}
+		.velocity-cell {
+		align-items: center;
+		justify-content: center; /* This centers the text horizontally */
+		position: relative;
+		border: none; /* Remove any extra border */
+		padding: 0 5px; /* Adjust padding to ensure content is centered properly */
+		}
+		.subsonic-icon {
+		display: inline-block;
+		background-color: #3899DE; /* Blue background */
+		color: #FFFFFF; /* White text */
+		padding: 4px 6px; /* Adjust padding as needed */
+		margin-left: 5px; /* Space between the text and icon */
+		border-radius: 5px;
+		font-size: 9px; /* Adjust size as needed */
+		vertical-align: middle;
+	    position: absolute; /* Use absolute positioning */
+		right: 10px; /* Align to the right side of the cell */
+		}
+		.infobox {
+		color: #B5B5B5;
+		width: 100%;
+		margin: 0 auto;
+		text-align: center;
+		}
+    </style>
+<!-- AdSense Verify Start -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0398618735302535"
+     crossorigin="anonymous"></script>
+<!-- AdSense Verify End -->
+</head>
+<body>
+<div class="nav"></div>
+<div class="contentbody">
+<BR>
+<div class="infobox">
+This website is just the beginning of a large community project to bring you all the ballistic stats for Gray Zone Warfare. 
+<BR> and as such is a work in progress, the infomration on this site will change without notice.
+<BR> Currently we only have the basic pen levels but more stats are comming - hang tight!<BR><BR>
+</div>
+<div class="top-container">
+
+<div class="area1">
+	<div class="venderarea">
+		<div class="filter-options">
+			<div><img src="./img/gunny.jpg" alt="Gunny" class="venderimages">				
+				<button id="G1">Level 1</button><BR>
+				<button id="G2">Level 2</button><BR>
+				<button id="G3">Level 3</button>
+				<div class="vendername">Gunny</div>
+			</div>
+			<div><img src="./img/artisan.jpg" alt="Artisan"class="venderimages">
+				<button id="A1">Level 1</button><BR>
+				<button id="A2">Level 2</button><BR>
+				<button id="A3">Level 3</button>
+				<div class="vendername">Artisan</div>
+			</div>
+			<div><img src="./img/turncoat.jpg" alt="Turncoat" class="venderimages">
+				<button id="T1">Level 1</button><BR>
+				<button id="T2">Level 2</button><BR>
+				<button id="T3">Level 3</button>
+				<div class="vendername">Turncoat</div>
+			</div>
+			<div><img src="./img/banshee.jpg" alt="Banshee" class="venderimages">
+				<button id="B1">Level 1</button><BR>
+				<button id="B2">Level 2</button><BR>
+				<button id="B3">Level 3</button>
+				<div class="vendername">Banshee</div>
+			</div>
+		</div> <!--close filterarea-->	
+	</div> <!--close venderarea-->
+		<div class="searcharea">
+		<input type="text" id="searchBox" placeholder="Start typing to live filter calibre or ammo type...">
+        <button id="clearFilters">Clear Trader level & Search Filtering</button>
+		</div> <!--close searcharea -->
+		</div>
+		<div class="area1right">
+			<div class="stattable">
+			<table><thead>
+			  <tr>
+				<th colspan="4">Pen Level Key <BR>(based on a direct hit to a critical organ; Head/Heart area)</th>
+			  </tr></thead>
+			<tbody>
+			  <tr>
+				<td style="background-color: #FF4C4C; color: black;">0 <BR><BR>No Pen</td>
+				<td style="background-color: #FFA500; color: black;">1 <BR><BR>Light bruise/bleed</td>
+				<td style="background-color: #ffd700; color: black;">2 <BR><BR>Medium bruise/bleed</td>
+				<td style="background-color: #32CD32; color: black;">3 <BR><BR>1Tap/Insta Death</td>
+			  </tr>
+			</tbody>
+			</table>
+			</div>
+		</div>
+		
+</div> <!--close area1-->
+<div class="advert-top"></div>
+    <div class="content" id="content"></div>
+</div>
+<div class="footer-area"> <p>
+<!-- <div>Legion Discord | GZW Discord</div> -->
+<div><b>Originator:</b> AstroPolski   | <b>Testers:</b>  Wurstball, itsjustTHUMBS, SparkleLover, Thee_JOMO, LetMeEatYouOut</div>
+</div><p>
+<div class="footer-copyright"><b>Webdesign by Bishop_Actual, All rights Reserved © 2024</b><BR>All Vender, Ammo and Game images are all copyright to GRAY ZONE WARFARE®/MADFINGERGAMES®️</div>
+    <script>
+        const data = {
+			"ammoList": {
+				"12 Gauge Shot": [
+					{
+						"name": "00 BUCK",
+						"dispersion": "0%",
+						"velocity": "370",
+						"subsonic": false,
+						"trader": "Gunny 1",
+						"buy": "1$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "FC 00 BUCK",
+						"dispersion": "-27%",
+						"velocity": "370",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "0",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					}
+				],
+				"12 Gauge Slug": [
+					{
+						"name": "12G SLUG",
+						"dispersion": "-42%",
+						"velocity": "420",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "2$",
+						"class1": "3",
+						"class2a": "0",
+						"class2aplus": "0",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "SST SABOT SLUG",
+						"dispersion": "-50%",
+						"velocity": "542",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "1",
+						"class2aplus": "1",
+						"class3a": "1",
+						"class3aplus": "1",
+						"class3": "1",
+						"class3plus": "1 "
+					}
+				],
+				"7.65 browning": [
+					{
+						"name": "FMJ",
+						"dispersion": "0%",
+						"velocity": "318",
+						"subsonic": true,
+						"trader": "Artisan 1",
+						"buy": "1$",
+						"class1": "0",
+						"class2a": "0",
+						"class2aplus": "0",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "JHP",
+						"dispersion": "4%",
+						"velocity": "283",
+						"subsonic": true,
+						"trader": "Artisan 2",
+						"buy": "2$",
+						"class1": "0",
+						"class2a": "0",
+						"class2aplus": "0",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					}
+				],
+				"7.62x25": [
+					{
+						"name": "FMJ",
+						"dispersion": "0%",
+						"velocity": "427",
+						"subsonic": false,
+						"trader": "Artisan 1",
+						"buy": "1$",
+						"class1": "3",
+						"class2a": "2",
+						"class2aplus": "2",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "PST",
+						"dispersion": "-2%",
+						"velocity": "430",
+						"subsonic": false,
+						"trader": "Artisan 2",
+						"buy": "2$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "PT",
+						"dispersion": "2%",
+						"velocity": "415",
+						"subsonic": false,
+						"trader": "Artisan 2",
+						"buy": "1$",
+						"class1": "3",
+						"class2a": "2",
+						"class2aplus": "2",
+						"class3a": "2",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					}
+				],
+				"9mm": [
+					{
+						"name": "FMJ",
+						"dispersion": "0%",
+						"velocity": "390",
+						"subsonic": false,
+						"trader": "Gunny 1",
+						"buy": "1$",
+						"class1": "0",
+						"class2a": "0",
+						"class2aplus": "0",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "HP",
+						"dispersion": "3%",
+						"velocity": "377",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "2$",
+						"class1": "0",
+						"class2a": "0",
+						"class2aplus": "0",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "TRACER",
+						"dispersion": "4%",
+						"velocity": "342",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "2$",
+						"class1": "2",
+						"class2a": "0",
+						"class2aplus": "0",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "XTREME PEN",
+						"dispersion": "-2%",
+						"velocity": "381",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "0",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					}
+				],
+				"5.45x39": [
+					{
+						"name": "FMJ",
+						"dispersion": "0%",
+						"velocity": "884",
+						"subsonic": false,
+						"trader": "Turncoat 1",
+						"buy": "1$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "1",
+						"class3plus": "1 "
+					},
+					{
+						"name": "US",
+						"dispersion": "6%",
+						"velocity": "304",
+						"subsonic": true,
+						"trader": "Turncoat 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "1",
+						"class3aplus": "1",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "HP",
+						"dispersion": "6%",
+						"velocity": "884",
+						"subsonic": false,
+						"trader": "Turncoat 2",
+						"buy": "2$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "1",
+						"class3plus": "1 "
+					},
+					{
+						"name": "PS",
+						"dispersion": "2%",
+						"velocity": "880",
+						"subsonic": false,
+						"trader": "Turncoat 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "1",
+						"class3plus": "1 "
+					},
+					{
+						"name": "PP",
+						"dispersion": "-2%",
+						"velocity": "880",
+						"subsonic": false,
+						"trader": "Turncoat 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "2 "
+					},
+					{
+						"name": "BT",
+						"dispersion": "-2%",
+						"velocity": "880",
+						"subsonic": false,
+						"trader": "Turncoat 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "1",
+						"class3plus": "1 "
+					},
+					{
+						"name": "BP",
+						"dispersion": "-1%",
+						"velocity": "840",
+						"subsonic": false,
+						"trader": "Turncoat 3",
+						"buy": "NA",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "3 "
+					},
+					{
+						"name": "BS",
+						"dispersion": "-6%",
+						"velocity": "840",
+						"subsonic": false,
+						"trader": "Turncoat 3",
+						"buy": "5$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "1 "
+					}
+				],
+				"5.56x45": [
+					{
+						"name": "SP",
+						"dispersion": "3%",
+						"velocity": "930",
+						"subsonic": false,
+						"trader": "Gunny 1",
+						"buy": "1$",
+						"class1": "1",
+						"class2a": "1",
+						"class2aplus": "1",
+						"class3a": "1",
+						"class3aplus": "1",
+						"class3": "1",
+						"class3plus": "1 "
+					},
+					{
+						"name": "HPBT",
+						"dispersion": "3%",
+						"velocity": "1040",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "2$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "1",
+						"class3plus": "1 "
+					},
+					{
+						"name": "FMJ",
+						"dispersion": "0%",
+						"velocity": "880",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "1$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "1",
+						"class3plus": "1 "
+					},
+					{
+						"name": "M193",
+						"dispersion": "-2%",
+						"velocity": "1006",
+						"subsonic": false,
+						"trader": "N/A",
+						"buy": "N/A",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "1",
+						"class3plus": "1 "
+					},
+					{
+						"name": "M855",
+						"dispersion": "-2%",
+						"velocity": "945",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "1 "
+					},
+					{
+						"name": "M856",
+						"dispersion": "3%",
+						"velocity": "916",
+						"subsonic": false,
+						"trader": "Gunny 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "1 "
+					},
+					{
+						"name": "M856A1",
+						"dispersion": "4%",
+						"velocity": "968",
+						"subsonic": false,
+						"trader": "Gunny 3",
+						"buy": "N/A",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "3 "
+					},
+					{
+						"name": "M855A1",
+						"dispersion": "-7%",
+						"velocity": "970",
+						"subsonic": false,
+						"trader": "Gunny 3",
+						"buy": "5$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "3 "
+					}
+				],
+				"7.62x39": [
+					{
+						"name": "SP",
+						"dispersion": "2%",
+						"velocity": "743",
+						"subsonic": false,
+						"trader": "Artisan 1",
+						"buy": "1$",
+						"class1": "1",
+						"class2a": "1",
+						"class2aplus": "1",
+						"class3a": "1",
+						"class3aplus": "0",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "US",
+						"dispersion": "6%",
+						"velocity": "310",
+						"subsonic": true,
+						"trader": "N/A",
+						"buy": "N/A",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "1",
+						"class3aplus": "1",
+						"class3": "0",
+						"class3plus": "0 "
+					},
+					{
+						"name": "TRACER",
+						"dispersion": "3%",
+						"velocity": "725",
+						"subsonic": false,
+						"trader": "Artisan 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "0 "
+					},
+					{
+						"name": "PS",
+						"dispersion": "-1%",
+						"velocity": "725",
+						"subsonic": false,
+						"trader": "Artisan 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "1 "
+					},
+					{
+						"name": "BP",
+						"dispersion": "-2%",
+						"velocity": "725",
+						"subsonic": false,
+						"trader": "Artisan 3",
+						"buy": "5$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "2",
+						"class3plus": "2 "
+					}
+				],
+				"7.62x51": [
+					{
+						"name": "FMJ/M80",
+						"dispersion": "0%",
+						"velocity": "838",
+						"subsonic": false,
+						"trader": "Banshee 1",
+						"buy": "2$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "2",
+						"class3aplus": "2",
+						"class3": "2",
+						"class3plus": "2 "
+					},
+					{
+						"name": "M80A1",
+						"dispersion": "-3%",
+						"velocity": "835",
+						"subsonic": false,
+						"trader": "Banshee 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "2 "
+					},
+					{
+						"name": "HPBT",
+						"dispersion": "-4%",
+						"velocity": "800",
+						"subsonic": false,
+						"trader": "Banshee 3",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "2",
+						"class3plus": "2 "
+					},
+					{
+						"name": "M62",
+						"dispersion": "4%",
+						"velocity": "822",
+						"subsonic": false,
+						"trader": "Banshee 3",
+						"buy": "5$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "2",
+						"class3plus": "2 "
+					},
+					{
+						"name": "M61",
+						"dispersion": "-4%",
+						"velocity": "838",
+						"subsonic": false,
+						"trader": "Banshee 3",
+						"buy": "5$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "3 "
+					}
+				],
+				"7.62x54R": [
+					{
+						"name": "LPS",
+						"dispersion": "-1%",
+						"velocity": "828",
+						"subsonic": false,
+						"trader": "Artisan 1",
+						"buy": "2$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "2 "
+					},
+					{
+						"name": "TRACER",
+						"dispersion": "3%",
+						"velocity": "830",
+						"subsonic": false,
+						"trader": "Artisan 2",
+						"buy": "3$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "2 "
+					},
+					{
+						"name": "SR",
+						"dispersion": "-5%",
+						"velocity": "835",
+						"subsonic": false,
+						"trader": "N/A",
+						"buy": "N/A",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "3 "
+					},
+					{
+						"name": "AP",
+						"dispersion": "-2%",
+						"velocity": "828",
+						"subsonic": false,
+						"trader": "Artisan 3",
+						"buy": "5$",
+						"class1": "3",
+						"class2a": "3",
+						"class2aplus": "3",
+						"class3a": "3",
+						"class3aplus": "3",
+						"class3": "3",
+						"class3plus": "3 "
+					}
+				]
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", function() {
+function applyBackgroundColors() {
+    document.querySelectorAll('.pencolor').forEach(cell => {
+        switch (cell.textContent.trim()) {
+            case '0':
+                cell.style.backgroundColor = '#FF4C4C'; // Red
+                break;
+            case '1':
+                cell.style.backgroundColor = '#FFA500'; // Orange
+                break;
+            case '2':
+                cell.style.backgroundColor = '#ffd700'; // Yellow
+                break;
+            case '3':
+                cell.style.backgroundColor = '#32CD32'; // Green
+                break;
+                    }
+                });
+            }
+
+            function renderContent(data) {
+                const contentDiv = document.getElementById('content');
+                contentDiv.innerHTML = '';
+
+                for (const calibre in data) {
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = 'ammo-section';
+                    sectionDiv.innerHTML = `
+                        <h3>${calibre}</h3>
+                        <div class="ammo-content">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 160px;">Name</th>
+                                        <th>Trader Level</th>
+                                        <th>Buy</th>
+                                        <th>Dispersion</th>
+                                        <th>Velocity (m/s)</th>
+                                        <th>Class I</th>
+                                        <th>Class IIa</th>
+                                        <th>Class IIa+</th>
+                                        <th>Class IIIa</th>
+                                        <th>Class IIIa+</th>
+                                        <th>Class III</th>
+                                        <th>Class III+</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${data[calibre].map(item => `
+                                        <tr>
+                                            <td>${item.name}</td>
+                                            <td>${item.trader}</td>
+                                            <td>${item.buy}</td>
+                                            <td class="dispersionColor">${item.dispersion}</td>
+											<td class="velocity-cell" style="color: ${item.subsonic ? '#3899DE' : 'black'};">
+												${item.velocity}
+												${item.subsonic ? '<span class="subsonic-icon">subsonic</span>' : ''}
+											</td>
+                                            <td class="pencolor">${item.class1}</td>
+                                            <td class="pencolor">${item.class2a}</td>
+                                            <td class="pencolor">${item.class2aplus}</td>
+                                            <td class="pencolor">${item.class3a}</td>
+                                            <td class="pencolor">${item.class3aplus}</td>
+                                            <td class="pencolor">${item.class3}</td>
+                                            <td class="pencolor">${item.class3plus}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                    contentDiv.appendChild(sectionDiv);
+                }
+
+                applyBackgroundColors();
+            }
+
+            function setupSearch(data) {
+                const searchBox = document.getElementById('searchBox');
+
+                searchBox.addEventListener('input', function() {
+                    const searchTerm = searchBox.value.toLowerCase();
+                    const filteredData = {};
+
+                    for (const calibre in data) {
+                        const filteredItems = data[calibre].filter(item =>
+                            calibre.toLowerCase().includes(searchTerm) || item.name.toLowerCase().includes(searchTerm)
+                        );
+                        if (filteredItems.length > 0) {
+                            filteredData[calibre] = filteredItems;
+                        }
+                    }
+
+                    renderContent(filteredData);
+                    setupCollapse();
+                });
+            }
+
+            function setupFilters(data) {
+                const filters = {
+                    G1: "Gunny 1",
+                    G2: "Gunny 2",
+                    G3: "Gunny 3",
+                    A1: "Artisan 1",
+                    A2: "Artisan 2",
+                    A3: "Artisan 3",
+                    T1: "Turncoat 1",
+                    T2: "Turncoat 2",
+                    T3: "Turncoat 3",
+                    B1: "Banshee 1",
+                    B2: "Banshee 2",
+                    B3: "Banshee 3"
+                };
+
+                for (const filterId in filters) {
+                    document.getElementById(filterId).addEventListener('click', function() {
+                        const filteredData = {};
+
+                        for (const calibre in data) {
+                            const filteredItems = data[calibre].filter(item => item.trader === filters[filterId]);
+                            if (filteredItems.length > 0) {
+                                filteredData[calibre] = filteredItems;
+                            }
+                        }
+
+                        renderContent(filteredData);
+                        setupCollapse();
+                    });
+                }
+
+                document.getElementById('clearFilters').addEventListener('click', function() {
+                    renderContent(data);
+                    setupCollapse();
+                });
+            }
+
+            function setupCollapse() {
+                const sectionHeaders = document.querySelectorAll('.ammo-section h3');
+
+                sectionHeaders.forEach(header => {
+                    header.addEventListener('click', function() {
+                        const content = header.nextElementSibling;
+                        content.classList.toggle('hidden');
+                    });
+                });
+			const dispersionCells = document.querySelectorAll('.dispersionColor');
+			dispersionCells.forEach(cell => {
+            const dispersion = parseFloat(cell.textContent);
+            if (dispersion > 0) {
+                cell.style.color = '#FF4C4C'; // red for negative dispersion (+ %)
+            } else if (dispersion < 0) {
+                cell.style.color = '#207D03'; // green for positive dispersion (- %)
+            } else {
+                cell.style.color = '#000000'; // default to black if 0 
+            }
+			});
+			
+        }
+
+            renderContent(data.ammoList);
+            setupSearch(data.ammoList);
+            setupFilters(data.ammoList);
+            setupCollapse();
+        });
+    </script>
+</body>
+</html>
